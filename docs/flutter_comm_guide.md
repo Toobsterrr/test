@@ -6,10 +6,10 @@ Deze file beschrijft hoe een model wordt opgesteld om data-transfers in json for
 
 ## stappenplan
 
-- eenmalig
-  1) Brengt dependencies in orde.
+- [eenmalig](#eenmalig)
+  1) Breng dependencies in orde.
   
-- telkens
+- [telkens](#telkens)
   1) Maak een nieuwe class aan, liefst in een nieuwe file genoemd naar de class.
   2) Import de juiste files.
   3) Kopieer de setup-code en verander de naam van de file die gegenereert gaat worden naar die van de huidige _file_.
@@ -17,7 +17,9 @@ Deze file beschrijft hoe een model wordt opgesteld om data-transfers in json for
   5) Kies de gewenste data door deze ongeinitialiseerd te declaren op class level.
   6) Run het commando om de code te genereren.
 
-## Dependencies
+- [verder gebruik](#verder-gebruik)
+
+## Eenmalig
 
 ```yaml
 dependencies:
@@ -28,13 +30,14 @@ dev_dependencies:
   json_serializable: "3.5.0"
 ```
 
-## Imports
+## Telkens
+### Imports
 
 ```dart
 import 'package:json_annotation/json_annotation.dart';
 ```
 
-## Specifieke setup van de library
+### Specifieke setup van de library
 
 ```dart
 part 'user.g.dart'; // naam van gegenereerde file (aan te passen, filename)
@@ -42,7 +45,7 @@ part 'user.g.dart'; // naam van gegenereerde file (aan te passen, filename)
 @JsonSerializable()
 ```
 
-## De form zelf met de data
+### De form zelf met de data
 
 ```dart
 class User {
@@ -59,8 +62,20 @@ class User {
 }
 ```
 
-## commando voor code-generatie
+### commando voor code-generatie
 
 ```bash
 flutter pub run build_runner build
+```
+
+## verder gebruik
+
+```dart
+String jsonVb = "{'length':5, 'height':2}";
+String jsonMsg = http.get('http://localhost:5000/json_url');
+
+Map userMap = jsonDecode(jsonMsg); // maak een key-value map van de json
+var user = Persoon.fromJson(userMap); // maak de bijhorende class aan dmv. de map
+
+String temp = jsonEncode(user); // maak een json file van de class
 ```
